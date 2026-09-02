@@ -5,7 +5,7 @@ import { GoldHeart, MapPinIcon, WhatsAppIcon } from './Icons'
 import { RevealOnScroll, SectionDivider } from './RevealOnScroll'
 import { RSVPForm } from './RSVPForm'
 import { Countdown } from './Countdown'
-import { lockScrollToTop } from '../utils/scrollToTop'
+import { lockHeroPosition } from '../utils/scrollToTop'
 
 function MapsButton({ href, label }: { href: string; label: string }) {
   return (
@@ -122,7 +122,7 @@ export function InvitationPage() {
     details,
   } = weddingConfig
 
-  useLayoutEffect(() => lockScrollToTop(), [])
+  useLayoutEffect(() => lockHeroPosition(), [])
 
   useEffect(() => {
     const root = document.documentElement
@@ -144,13 +144,11 @@ export function InvitationPage() {
 
   return (
     <div className="invitation">
-      <a className="skip-link" href="#hero">
-        Vai al contenuto
-      </a>
       <FloralDecoration position="top-right" />
 
       <main className="invitation-content">
-        <header className="hero" id="hero">
+        <div className="page-top-spacer" aria-hidden="true" />
+        <header className="hero">
           <h1 className="hero-names">
             <span className="hero-name hero-animate" style={{ '--i': 0 } as CSSProperties}>
               {bride}

@@ -45,16 +45,39 @@
       rel="stylesheet"
     />
     <title>Alessandra &amp; Andrea — 25 Giugno 2027</title>
+    <style>
+      html,
+      body {
+        overflow-anchor: none;
+        scroll-behavior: auto;
+      }
+      @media (max-width: 768px) {
+        .page-top-spacer {
+          height: max(6rem, calc(env(safe-area-inset-top, 0px) + 4.5rem));
+        }
+        .hero-animate {
+          opacity: 1 !important;
+          transform: none !important;
+          animation: none !important;
+        }
+      }
+    </style>
     <script>
       if ('scrollRestoration' in history) history.scrollRestoration = 'manual'
-      function __goTop() {
+      function __fixTop() {
         window.scrollTo(0, 0)
         document.documentElement.scrollTop = 0
         document.body.scrollTop = 0
+        var el = document.querySelector('.hero-name')
+        if (el) {
+          var top = el.getBoundingClientRect().top
+          if (top < 20) window.scrollBy(0, top - 20)
+        }
       }
-      __goTop()
-      window.addEventListener('load', __goTop)
-      window.addEventListener('pageshow', __goTop)
+      __fixTop()
+      window.addEventListener('load', __fixTop)
+      window.addEventListener('pageshow', __fixTop)
+      document.fonts && document.fonts.ready && document.fonts.ready.then(__fixTop)
     </script>
   </head>
   <body>

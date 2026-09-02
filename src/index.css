@@ -48,16 +48,13 @@
 
 @layer base {
   html {
-    scroll-behavior: smooth;
     -webkit-text-size-adjust: 100%;
     text-size-adjust: 100%;
-    scroll-padding-top: env(safe-area-inset-top, 0px);
     overflow-anchor: none;
   }
 
   body {
     margin: 0;
-    min-height: 100svh;
     background-color: var(--color-cream);
     color: var(--color-body);
     font-family: var(--font-sans);
@@ -82,8 +79,7 @@
 /* ── Layout ── */
 .invitation {
   position: relative;
-  min-height: 100svh;
-  overflow-x: hidden;
+  overflow-x: clip;
   background:
     radial-gradient(circle at 20% 12%, rgb(128 101 47 / 0.035) 0 1px, transparent 1.5px) 0 0 / 13px 13px,
     radial-gradient(circle at 78% 65%, rgb(102 116 94 / 0.03) 0 1px, transparent 1.5px) 0 0 / 17px 17px,
@@ -95,8 +91,11 @@
   z-index: 1;
   max-width: 460px;
   margin: 0 auto;
-  padding: clamp(72px, 16vw, 108px) clamp(22px, 6vw, 36px)
-    clamp(112px, 24vw, 152px);
+  padding: 1.25rem clamp(22px, 6vw, 36px) clamp(112px, 24vw, 152px);
+}
+
+.page-top-spacer {
+  display: none;
 }
 
 .sr-only {
@@ -159,7 +158,6 @@
 .hero {
   text-align: center;
   margin-bottom: var(--space-2xl);
-  scroll-margin-top: env(safe-area-inset-top, 0px);
 }
 
 .hero-names {
@@ -981,33 +979,23 @@ html.hero-ready .hero-animate {
   }
 }
 
-@media (max-width: 768px) {
+@media (min-width: 769px) {
   .invitation-content {
-    padding-top: calc(env(safe-area-inset-top, 0px) + 3.25rem);
-  }
-
-  .hero-animate {
-    opacity: 1;
-    transform: none;
-  }
-
-  html.hero-ready .hero-animate {
-    animation: heroFadeIn 0.75s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-    animation-delay: calc(var(--i, 0) * 0.1s);
-  }
-
-  html:not(.hero-ready) .hero-animate {
-    opacity: 1;
-    transform: none;
+    padding-top: clamp(72px, 16vw, 108px);
   }
 }
 
-@keyframes heroFadeIn {
-  from {
-    opacity: 0.35;
+@media (max-width: 768px) {
+  .page-top-spacer {
+    display: block;
+    height: max(6rem, calc(env(safe-area-inset-top, 0px) + 4.5rem));
+    flex-shrink: 0;
   }
-  to {
-    opacity: 1;
+
+  .hero-animate {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
   }
 }
 
