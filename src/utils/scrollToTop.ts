@@ -1,8 +1,10 @@
-let scrollLockActive = false
-
 export function initPageScroll() {
   if ('scrollRestoration' in history) {
     history.scrollRestoration = 'manual'
+  }
+
+  if (location.hash) {
+    history.replaceState(history.state, '', location.pathname + location.search)
   }
 
   window.scrollTo(0, 0)
@@ -10,33 +12,65 @@ export function initPageScroll() {
   document.body.scrollTop = 0
 }
 
-/** Blocca lo scroll durante il load iniziale — fix per WhatsApp iOS che sposta la posizione. */
-export function lockScrollDuringLoad() {
-  if (scrollLockActive) return () => undefined
-  scrollLockActive = true
+function enforceTopIfScrolled() {
+  if (window.scrollY !== 0) {
+    window.scrollTo(0, 0)
+    document.documentElement.scrollTop = 0
+    document.body.scrollTop = 0
+  }
+}
 
+/**
+ * WhatsApp / in-app browser ripristinano lo scroll della sessione al tap sul link.
+ * Incollare l'URL in Safari no — serve forzare scroll 0 finché il handoff non finisce.
+ */
+export function setupExternalHandoffScrollFix() {
   initPageScroll()
 
-  const html = document.documentElement
-  html.style.overflow = 'hidden'
+  const bursts = [0, 50, 120, 250, 500, 900, 1400, 2200, 3200]
 
-  const unlock = () => {
-    html.style.overflow = ''
-    initPageScroll()
+  const runBursts = () => {
+    bursts.forEach((delay) => window.setTimeout(enforceTopIfScrolled, delay))
   }
 
-  const onPageShow = () => initPageScroll()
+  const onPageShow = (event: PageTransitionEvent) => {
+    initPageScroll()
+    runBursts()
+    if (event.persisted) {
+      bursts.forEach((delay) => window.setTimeout(initPageScroll, delay))
+    }
+  }
+
+  const onVisible = () => {
+    if (document.visibilityState === 'visible') {
+      enforceTopIfScrolled()
+    }
+  }
 
   window.addEventListener('pageshow', onPageShow)
-  window.addEventListener('load', unlock, { once: true })
-  document.fonts?.ready.then(unlock)
+  document.addEventListener('visibilitychange', onVisible)
+  document.fonts?.ready.then(() => {
+    initPageScroll()
+    runBursts()
+  })
 
-  const fallback = window.setTimeout(unlock, 800)
+  runBursts()
+
+  const start = performance.now()
+  let frame = 0
+
+  const watch = () => {
+    enforceTopIfScrolled()
+    if (performance.now() - start < 3500) {
+      frame = requestAnimationFrame(watch)
+    }
+  }
+
+  frame = requestAnimationFrame(watch)
 
   return () => {
-    window.clearTimeout(fallback)
+    cancelAnimationFrame(frame)
     window.removeEventListener('pageshow', onPageShow)
-    unlock()
-    scrollLockActive = false
+    document.removeEventListener('visibilitychange', onVisible)
   }
 }

@@ -59,20 +59,26 @@
     </style>
     <script>
       if ('scrollRestoration' in history) history.scrollRestoration = 'manual'
-      window.scrollTo(0, 0)
-      document.documentElement.scrollTop = 0
-      document.body.scrollTop = 0
-      document.documentElement.style.overflow = 'hidden'
-      window.addEventListener(
-        'load',
-        function () {
-          document.documentElement.style.overflow = ''
-          window.scrollTo(0, 0)
-        },
-        { once: true },
-      )
-      window.addEventListener('pageshow', function () {
+      if (location.hash) history.replaceState(history.state, '', location.pathname + location.search)
+      function __top() {
         window.scrollTo(0, 0)
+        document.documentElement.scrollTop = 0
+        document.body.scrollTop = 0
+      }
+      __top()
+      ;[0, 50, 150, 300, 600, 1000, 2000].forEach(function (d) {
+        setTimeout(__top, d)
+      })
+      window.addEventListener('pageshow', function (e) {
+        __top()
+        if (e.persisted) {
+          ;[0, 50, 150, 300, 600, 1000].forEach(function (d) {
+            setTimeout(__top, d)
+          })
+        }
+      })
+      document.addEventListener('visibilitychange', function () {
+        if (document.visibilityState === 'visible') __top()
       })
     </script>
   </head>
