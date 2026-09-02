@@ -64,20 +64,9 @@
     </style>
     <script>
       if ('scrollRestoration' in history) history.scrollRestoration = 'manual'
-      function __fixTop() {
-        window.scrollTo(0, 0)
-        document.documentElement.scrollTop = 0
-        document.body.scrollTop = 0
-        var el = document.querySelector('.hero-name')
-        if (el) {
-          var top = el.getBoundingClientRect().top
-          if (top < 20) window.scrollBy(0, top - 20)
-        }
-      }
-      __fixTop()
-      window.addEventListener('load', __fixTop)
-      window.addEventListener('pageshow', __fixTop)
-      document.fonts && document.fonts.ready && document.fonts.ready.then(__fixTop)
+      window.scrollTo(0, 0)
+      document.documentElement.scrollTop = 0
+      document.body.scrollTop = 0
     </script>
   </head>
   <body>

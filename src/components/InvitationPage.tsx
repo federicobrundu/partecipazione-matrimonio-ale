@@ -5,7 +5,7 @@ import { GoldHeart, MapPinIcon, WhatsAppIcon } from './Icons'
 import { RevealOnScroll, SectionDivider } from './RevealOnScroll'
 import { RSVPForm } from './RSVPForm'
 import { Countdown } from './Countdown'
-import { lockHeroPosition } from '../utils/scrollToTop'
+import { initPageScroll } from '../utils/scrollToTop'
 
 function MapsButton({ href, label }: { href: string; label: string }) {
   return (
@@ -122,9 +122,13 @@ export function InvitationPage() {
     details,
   } = weddingConfig
 
-  useLayoutEffect(() => lockHeroPosition(), [])
+  useLayoutEffect(() => {
+    initPageScroll()
+  }, [])
 
   useEffect(() => {
+    initPageScroll()
+
     const root = document.documentElement
 
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
