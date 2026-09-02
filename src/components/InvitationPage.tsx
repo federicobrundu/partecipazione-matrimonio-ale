@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useLayoutEffect, useState, type CSSProperties } from 'react'
+import { useCallback, useLayoutEffect, useState, type CSSProperties } from 'react'
 import { weddingConfig } from '../data/wedding'
 import { FloralDecoration } from './FloralDecoration'
 import { GoldHeart, MapPinIcon, WhatsAppIcon } from './Icons'
@@ -124,26 +124,6 @@ export function InvitationPage() {
 
   useLayoutEffect(() => {
     initPageScroll()
-  }, [])
-
-  useEffect(() => {
-    initPageScroll()
-
-    const root = document.documentElement
-
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      root.classList.add('hero-ready')
-      return
-    }
-
-    const frame = requestAnimationFrame(() => {
-      requestAnimationFrame(() => root.classList.add('hero-ready'))
-    })
-
-    return () => {
-      cancelAnimationFrame(frame)
-      root.classList.remove('hero-ready')
-    }
   }, [])
 
   return (
