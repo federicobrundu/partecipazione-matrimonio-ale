@@ -1,11 +1,10 @@
-import { useCallback, useLayoutEffect, useState, type CSSProperties } from 'react'
+import { useCallback, useState, type CSSProperties } from 'react'
 import { weddingConfig } from '../data/wedding'
 import { FloralDecoration } from './FloralDecoration'
 import { GoldHeart, MapPinIcon, WhatsAppIcon } from './Icons'
 import { RevealOnScroll, SectionDivider } from './RevealOnScroll'
 import { RSVPForm } from './RSVPForm'
 import { Countdown } from './Countdown'
-import { initPageScroll } from '../utils/scrollToTop'
 
 function MapsButton({ href, label }: { href: string; label: string }) {
   return (
@@ -121,10 +120,6 @@ export function InvitationPage() {
     practicalInfo,
     details,
   } = weddingConfig
-
-  useLayoutEffect(() => {
-    initPageScroll()
-  }, [])
 
   return (
     <div className="invitation">

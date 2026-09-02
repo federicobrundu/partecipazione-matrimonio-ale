@@ -8,69 +8,39 @@ export function initPageScroll() {
   }
 
   window.scrollTo(0, 0)
-  document.documentElement.scrollTop = 0
-  document.body.scrollTop = 0
-}
-
-function enforceTopIfScrolled() {
-  if (window.scrollY !== 0) {
-    window.scrollTo(0, 0)
-    document.documentElement.scrollTop = 0
-    document.body.scrollTop = 0
-  }
 }
 
 /**
- * WhatsApp / in-app browser ripristinano lo scroll della sessione al tap sul link.
- * Incollare l'URL in Safari no — serve forzare scroll 0 finché il handoff non finisce.
+ * Corregge lo shift di scroll quando la toolbar del WebView in-app collassa
+ * (es. tap su link WhatsApp). Va chiamato prima di qualsiasi animazione hero.
  */
-export function setupExternalHandoffScrollFix() {
+export function setupInitialScroll() {
   initPageScroll()
 
-  const bursts = [0, 50, 120, 250, 500, 900, 1400, 2200, 3200]
+  const resetScroll = () => window.scrollTo(0, 0)
+  let guardActive = true
 
-  const runBursts = () => {
-    bursts.forEach((delay) => window.setTimeout(enforceTopIfScrolled, delay))
+  const onViewportChange = () => {
+    if (guardActive) resetScroll()
   }
 
-  const onPageShow = (event: PageTransitionEvent) => {
-    initPageScroll()
-    runBursts()
-    if (event.persisted) {
-      bursts.forEach((delay) => window.setTimeout(initPageScroll, delay))
-    }
+  window.addEventListener('resize', onViewportChange)
+  window.visualViewport?.addEventListener('resize', onViewportChange)
+
+  const endGuard = () => {
+    guardActive = false
+    window.removeEventListener('resize', onViewportChange)
+    window.visualViewport?.removeEventListener('resize', onViewportChange)
   }
 
-  const onVisible = () => {
-    if (document.visibilityState === 'visible') {
-      enforceTopIfScrolled()
-    }
+  const armPostLoadGuard = () => {
+    resetScroll()
+    window.setTimeout(endGuard, 500)
   }
 
-  window.addEventListener('pageshow', onPageShow)
-  document.addEventListener('visibilitychange', onVisible)
-  document.fonts?.ready.then(() => {
-    initPageScroll()
-    runBursts()
-  })
-
-  runBursts()
-
-  const start = performance.now()
-  let frame = 0
-
-  const watch = () => {
-    enforceTopIfScrolled()
-    if (performance.now() - start < 3500) {
-      frame = requestAnimationFrame(watch)
-    }
-  }
-
-  frame = requestAnimationFrame(watch)
-
-  return () => {
-    cancelAnimationFrame(frame)
-    window.removeEventListener('pageshow', onPageShow)
-    document.removeEventListener('visibilitychange', onVisible)
+  if (document.readyState === 'complete') {
+    armPostLoadGuard()
+  } else {
+    window.addEventListener('load', armPostLoadGuard, { once: true })
   }
 }
