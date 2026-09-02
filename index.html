@@ -51,16 +51,33 @@
         overflow-anchor: none;
         scroll-behavior: auto;
       }
-      @media (max-width: 768px) {
-        .page-top-spacer {
-          height: max(6rem, calc(env(safe-area-inset-top, 0px) + 4.5rem));
-        }
-      }
     </style>
     <script>
       if ('scrollRestoration' in history) history.scrollRestoration = 'manual'
       if (location.hash) history.replaceState(null, '', location.pathname + location.search)
-      window.scrollTo(0, 0)
+      function __resetScroll() {
+        window.scrollTo(0, 0)
+        document.documentElement.scrollTop = 0
+        document.body.scrollTop = 0
+        var vv = window.visualViewport
+        if (vv && vv.offsetTop > 0) window.scrollTo(0, window.scrollY + vv.offsetTop)
+      }
+      __resetScroll()
+      var __guard = true
+      function __onViewportChange() {
+        if (__guard) __resetScroll()
+      }
+      window.addEventListener('resize', __onViewportChange)
+      if (window.visualViewport) {
+        window.visualViewport.addEventListener('resize', __onViewportChange)
+        window.visualViewport.addEventListener('scroll', __onViewportChange)
+      }
+      window.addEventListener('load', function () {
+        __resetScroll()
+        setTimeout(function () {
+          __guard = false
+        }, 1500)
+      })
     </script>
   </head>
   <body>

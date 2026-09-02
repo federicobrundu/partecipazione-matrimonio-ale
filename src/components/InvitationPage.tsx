@@ -126,7 +126,6 @@ export function InvitationPage() {
       <FloralDecoration position="top-right" />
 
       <main className="invitation-content">
-        <div className="page-top-spacer" aria-hidden="true" />
         <header className="hero">
           <h1 className="hero-names">
             <span className="hero-name hero-animate" style={{ '--i': 0 } as CSSProperties}>

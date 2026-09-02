@@ -5,10 +5,15 @@ import './index.css'
 import App from './App.tsx'
 
 setupInitialScroll()
-document.documentElement.classList.add('hero-ready')
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <App />
   </StrictMode>,
 )
+
+requestAnimationFrame(() => {
+  requestAnimationFrame(() => {
+    document.documentElement.classList.add('hero-ready')
+  })
+})

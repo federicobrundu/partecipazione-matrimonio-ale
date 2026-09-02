@@ -1,3 +1,14 @@
+function resetScrollPosition() {
+  window.scrollTo(0, 0)
+  document.documentElement.scrollTop = 0
+  document.body.scrollTop = 0
+
+  const vv = window.visualViewport
+  if (vv && vv.offsetTop > 0) {
+    window.scrollTo(0, window.scrollY + vv.offsetTop)
+  }
+}
+
 export function initPageScroll() {
   if ('scrollRestoration' in history) {
     history.scrollRestoration = 'manual'
@@ -7,7 +18,7 @@ export function initPageScroll() {
     history.replaceState(history.state, '', location.pathname + location.search)
   }
 
-  window.scrollTo(0, 0)
+  resetScrollPosition()
 }
 
 /**
@@ -17,25 +28,41 @@ export function initPageScroll() {
 export function setupInitialScroll() {
   initPageScroll()
 
-  const resetScroll = () => window.scrollTo(0, 0)
   let guardActive = true
 
   const onViewportChange = () => {
-    if (guardActive) resetScroll()
+    if (guardActive) resetScrollPosition()
   }
 
-  window.addEventListener('resize', onViewportChange)
-  window.visualViewport?.addEventListener('resize', onViewportChange)
+  window.addEventListener('resize', onViewportChange, { passive: true })
+  window.visualViewport?.addEventListener('resize', onViewportChange, { passive: true })
+  window.visualViewport?.addEventListener('scroll', onViewportChange, { passive: true })
+
+  window.addEventListener(
+    'pageshow',
+    () => {
+      guardActive = true
+      resetScrollPosition()
+      window.setTimeout(() => {
+        guardActive = false
+      }, 500)
+    },
+    { passive: true },
+  )
 
   const endGuard = () => {
     guardActive = false
     window.removeEventListener('resize', onViewportChange)
     window.visualViewport?.removeEventListener('resize', onViewportChange)
+    window.visualViewport?.removeEventListener('scroll', onViewportChange)
   }
 
   const armPostLoadGuard = () => {
-    resetScroll()
-    window.setTimeout(endGuard, 500)
+    resetScrollPosition()
+    requestAnimationFrame(() => {
+      requestAnimationFrame(resetScrollPosition)
+    })
+    window.setTimeout(endGuard, 1500)
   }
 
   if (document.readyState === 'complete') {
@@ -43,4 +70,16 @@ export function setupInitialScroll() {
   } else {
     window.addEventListener('load', armPostLoadGuard, { once: true })
   }
+
+  document.fonts?.ready.then(() => {
+    if (guardActive) resetScrollPosition()
+  })
+}
+
+/** Chiamare dopo il primo paint React (post-idratazione). */
+export function resetScrollAfterPaint() {
+  resetScrollPosition()
+  requestAnimationFrame(() => {
+    requestAnimationFrame(resetScrollPosition)
+  })
 }
