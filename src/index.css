@@ -1,17 +1,14 @@
 @import 'tailwindcss';
 
 @theme {
-  --font-serif: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
-  --font-sans: 'Montserrat', system-ui, -apple-system, sans-serif;
+  --font-serif: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
+  --font-sans: 'Montserrat', system-ui, sans-serif;
 
-  --color-cream: #faf7f2;
-  --color-ivory: #fffdf9;
-  --color-sage: #8b9a7d;
-  --color-sage-dark: #6b7a5e;
-  --color-gold: #c4a962;
-  --color-gold-light: #d4bc7a;
-  --color-charcoal: #2c2c2c;
-  --color-warm-gray: #6b6560;
+  --color-cream: #f5f2eb;
+  --color-gold: #9a8352;
+  --color-gold-dark: #8b7548;
+  --color-body: #4a463f;
+  --color-black: #1a1a1a;
 }
 
 @layer base {
@@ -22,17 +19,355 @@
   }
 
   body {
-    @apply bg-cream font-sans text-charcoal antialiased;
+    margin: 0;
     min-height: 100dvh;
+    background-color: var(--color-cream);
+    color: var(--color-body);
+    font-family: var(--font-serif);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
   ::selection {
-    @apply bg-gold/30 text-charcoal;
+    background-color: color-mix(in srgb, var(--color-gold) 25%, transparent);
+    color: var(--color-black);
   }
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
+/* ── Layout ── */
+.invitation {
+  position: relative;
+  min-height: 100dvh;
+  overflow-x: hidden;
+  background-color: var(--color-cream);
+}
+
+.invitation-content {
+  position: relative;
+  z-index: 1;
+  max-width: 430px;
+  margin: 0 auto;
+  padding: clamp(72px, 18vw, 96px) clamp(20px, 6vw, 32px) clamp(100px, 22vw, 140px);
+}
+
+/* ── Floral decorations ── */
+.floral {
+  position: fixed;
+  z-index: 0;
+  pointer-events: none;
+  user-select: none;
+}
+
+.floral-top-right {
+  top: -8px;
+  right: -24px;
+  width: clamp(180px, 48vw, 240px);
+  height: auto;
+}
+
+.floral-bottom-left {
+  bottom: -12px;
+  left: -28px;
+  width: clamp(160px, 44vw, 220px);
+  height: auto;
+}
+
+/* ── Hero ── */
+.hero {
+  text-align: center;
+  margin-bottom: clamp(48px, 12vw, 64px);
+}
+
+.hero-names {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+}
+
+.hero-name {
+  font-family: var(--font-serif);
+  font-size: clamp(2.5rem, 10vw, 3.25rem);
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: 0.02em;
+  color: var(--color-gold);
+}
+
+.hero-amp {
+  font-family: var(--font-serif);
+  font-size: clamp(1.5rem, 5.5vw, 1.875rem);
+  font-weight: 400;
+  line-height: 1.4;
+  color: var(--color-gold);
+  margin: 0.15em 0;
+}
+
+.hero-date {
+  margin: clamp(20px, 5vw, 28px) 0 0;
+  font-family: var(--font-serif);
+  font-size: clamp(0.95rem, 3.8vw, 1.0625rem);
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  color: var(--color-body);
+}
+
+/* ── Event sections ── */
+.event-section {
+  text-align: center;
+  margin-bottom: clamp(44px, 11vw, 56px);
+}
+
+.section-title {
+  margin: 0 0 clamp(10px, 2.5vw, 14px);
+  font-family: var(--font-serif);
+  font-size: clamp(1.625rem, 6.5vw, 2rem);
+  font-weight: 400;
+  line-height: 1.2;
+  color: var(--color-gold);
+}
+
+.venue-name {
+  margin: 0 0 clamp(14px, 3.5vw, 18px);
+  font-family: var(--font-serif);
+  font-size: clamp(1.125rem, 4.5vw, 1.3125rem);
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--color-gold-dark);
+  max-width: 320px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.maps-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-bottom: clamp(10px, 2.5vw, 14px);
+  font-family: var(--font-sans);
+  font-size: clamp(0.75rem, 3vw, 0.8125rem);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--color-black);
+  min-height: 44px;
+  padding: 8px 4px;
+  transition: opacity 0.2s ease;
+}
+
+.maps-link:hover {
+  opacity: 0.7;
+}
+
+.maps-link:focus-visible {
+  outline: 2px solid var(--color-gold);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+.maps-pin {
+  font-size: 1em;
+  line-height: 1;
+}
+
+.venue-address {
+  margin: 0 0 clamp(8px, 2vw, 12px);
+  font-family: var(--font-serif);
+  font-size: clamp(0.8125rem, 3.2vw, 0.9375rem);
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--color-body);
+  max-width: 300px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.venue-time {
+  margin: 0 0 clamp(24px, 6vw, 32px);
+  font-family: var(--font-serif);
+  font-size: clamp(0.8125rem, 3.2vw, 0.9375rem);
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--color-body);
+}
+
+/* ── Venue images ── */
+.venue-image-wrap {
+  margin: 0;
+  padding: 0;
+}
+
+.venue-image {
+  display: block;
+  width: 91%;
+  max-width: 340px;
+  height: auto;
+  margin: 0 auto;
+  border-radius: 16px;
+}
+
+/* ── Details section ── */
+.details-section {
+  text-align: center;
+  padding-bottom: clamp(24px, 6vw, 40px);
+}
+
+.details-intro {
+  margin: clamp(14px, 3.5vw, 20px) auto clamp(18px, 4.5vw, 24px);
+  max-width: 340px;
+  font-family: var(--font-serif);
+  font-size: clamp(0.8125rem, 3.2vw, 0.9375rem);
+  font-weight: 400;
+  line-height: 1.55;
+  color: var(--color-body);
+}
+
+.contacts {
+  margin-bottom: clamp(20px, 5vw, 28px);
+}
+
+.contact-line {
+  margin: 0 0 6px;
+  font-family: var(--font-serif);
+  font-size: clamp(0.875rem, 3.4vw, 1rem);
+  line-height: 1.5;
+  color: var(--color-body);
+}
+
+.contact-line strong {
+  font-weight: 600;
+  color: var(--color-body);
+}
+
+.contact-phone {
+  font-weight: 400;
+  color: var(--color-body);
+  text-decoration: none;
+  min-height: 44px;
+  display: inline-block;
+  padding: 4px 2px;
+}
+
+.contact-phone:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.contact-phone:focus-visible {
+  outline: 2px solid var(--color-gold);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+.gift-message {
+  margin: 0 auto clamp(24px, 6vw, 32px);
+  max-width: 340px;
+  font-family: var(--font-serif);
+  font-size: clamp(0.8125rem, 3.2vw, 0.9375rem);
+  font-weight: 400;
+  line-height: 1.55;
+  color: var(--color-body);
+}
+
+.bank-details {
+  margin-top: clamp(8px, 2vw, 12px);
+}
+
+.bank-label {
+  margin: 0 0 4px;
+  font-family: var(--font-serif);
+  font-size: clamp(0.6875rem, 2.6vw, 0.75rem);
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  color: var(--color-body);
+}
+
+.bank-label-iban {
+  margin-top: clamp(14px, 3.5vw, 18px);
+}
+
+.bank-value {
+  margin: 0 0 0;
+  font-family: var(--font-serif);
+  font-size: clamp(0.6875rem, 2.6vw, 0.75rem);
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  line-height: 1.45;
+  color: var(--color-body);
+  max-width: 340px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.iban-value {
+  position: relative;
+  display: inline-block;
+  margin: 0;
+  padding: 8px 4px;
+  min-height: 44px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: var(--font-serif);
+  font-size: clamp(0.6875rem, 2.6vw, 0.75rem);
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  line-height: 1.45;
+  color: var(--color-body);
+  transition: opacity 0.2s ease;
+}
+
+.iban-value:hover {
+  opacity: 0.7;
+}
+
+.iban-value:focus-visible {
+  outline: 2px solid var(--color-gold);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+.iban-copied {
+  display: block;
+  margin-top: 4px;
+  font-size: 0.6875rem;
+  font-style: italic;
+  color: var(--color-gold);
+}
+
+/* ── Desktop centering ── */
+@media (min-width: 768px) {
+  .invitation-content {
+    padding-top: 88px;
+    padding-bottom: 120px;
+  }
+
+  .floral-top-right {
+    right: max(0px, calc(50% - 430px / 2 - 60px));
+  }
+
+  .floral-bottom-left {
+    left: max(0px, calc(50% - 430px / 2 - 60px));
+  }
+}
+
+/* ── Very small screens ── */
+@media (max-width: 320px) {
+  .hero-name {
+    font-size: 2.25rem;
+  }
+
+  .venue-image {
+    border-radius: 12px;
+  }
+}
+
+/* ── Reduced motion ── */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
   }
 }

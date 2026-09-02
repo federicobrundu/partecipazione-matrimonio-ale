@@ -1,31 +1,35 @@
 export const weddingConfig = {
   bride: 'Alessandra',
-  groom: 'Marco',
-  tagline: 'Siamo felici di condividere con voi il giorno più importante della nostra vita',
-  date: '15 Giugno 2026',
-  dateISO: '2026-06-15T15:30:00',
-  locations: {
-    ceremony: {
-      title: 'Cerimonia',
-      name: 'Chiesa di San Giovanni',
-      address: 'Via Roma 1, Città',
-      time: '15:30',
-      mapsUrl: 'https://maps.google.com',
-    },
-    reception: {
-      title: 'Ricevimento',
-      name: 'Villa dei Fiori',
-      address: 'Strada Provinciale 10, Città',
-      time: '18:00',
-      mapsUrl: 'https://maps.google.com',
-    },
+  groom: 'Andrea',
+  date: '25 GIUGNO 2027',
+  ceremony: {
+    title: 'Cerimonia',
+    venue: 'Santuario Maria SS. di Loreto',
+    address: 'Santuario Maria SS. di Loreto, 03035 Fontana Liri',
+    time: 'La celebrazione inizierà per le ore 17.00',
+    mapsUrl:
+      'https://www.google.com/maps/search/?api=1&query=Santuario+Maria+SS.+di+Loreto,+03035+Fontana+Liri+FR',
+    imageAlt: 'Illustrazione del Santuario Maria SS. di Loreto a Fontana Liri',
   },
-  dressCode: 'Elegante — toni naturali e colori pastello benvenuti',
-  rsvp: {
-    deadline: '30 Aprile 2026',
-    formUrl: '', // Inserire link Google Form o simile
-    email: 'rsvp@example.com',
+  reception: {
+    title: 'Ricevimento',
+    venue: 'Greenpark Events',
+    address: 'Strada Statale 628, 03037 Pontecorvo',
+    mapsUrl:
+      'https://www.google.com/maps/search/?api=1&query=Greenpark+Events,+Strada+Statale+628,+03037+Pontecorvo+FR',
+    imageAlt: 'Illustrazione del parco Greenpark Events a Pontecorvo',
   },
-  gallery: [] as string[], // URL immagini da Canva/export
-  socialHashtag: '#AleMarco2026',
-}
+  details: {
+    title: 'Dettagli',
+    rsvpIntro:
+      'Vi chiediamo gentilmente di confermare la vostra presenza entro il 30 Maggio 2027 contattando:',
+    contacts: [
+      { name: 'Andrea', phone: '389 425 4661', tel: '+393894254661' },
+      { name: 'Alessandra', phone: '346 514 9993', tel: '+393465149993' },
+    ],
+    giftMessage:
+      'Il regalo più grande per noi sarà condividere con voi questo giorno speciale. Per chi volesse, può contribuire al nostro progetto di vita insieme ❤️',
+    accountHolder: 'BRUNDU ALESSANDRA MOLLICONE ANDREA ANTONIO',
+    iban: 'IT59D0538703229000004117638',
+  },
+} as const
