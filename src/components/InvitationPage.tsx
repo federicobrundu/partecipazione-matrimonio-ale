@@ -5,6 +5,7 @@ import { GoldHeart, MapPinIcon, WhatsAppIcon } from './Icons'
 import { RevealOnScroll, SectionDivider } from './RevealOnScroll'
 import { RSVPForm } from './RSVPForm'
 import { Countdown } from './Countdown'
+import { lockScrollToTop } from '../utils/scrollToTop'
 
 function MapsButton({ href, label }: { href: string; label: string }) {
   return (
@@ -121,19 +122,10 @@ export function InvitationPage() {
     details,
   } = weddingConfig
 
-  useLayoutEffect(() => {
-    if ('scrollRestoration' in history) {
-      history.scrollRestoration = 'manual'
-    }
-    window.scrollTo(0, 0)
-  }, [])
+  useLayoutEffect(() => lockScrollToTop(), [])
 
   useEffect(() => {
     const root = document.documentElement
-    const resetScroll = () => window.scrollTo(0, 0)
-
-    resetScroll()
-    document.fonts?.ready.then(resetScroll)
 
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
       root.classList.add('hero-ready')
@@ -141,17 +133,11 @@ export function InvitationPage() {
     }
 
     const frame = requestAnimationFrame(() => {
-      requestAnimationFrame(() => {
-        root.classList.add('hero-ready')
-        resetScroll()
-      })
+      requestAnimationFrame(() => root.classList.add('hero-ready'))
     })
-
-    const scrollTimer = window.setTimeout(resetScroll, 120)
 
     return () => {
       cancelAnimationFrame(frame)
-      window.clearTimeout(scrollTimer)
       root.classList.remove('hero-ready')
     }
   }, [])

@@ -57,7 +57,7 @@
 
   body {
     margin: 0;
-    min-height: 100dvh;
+    min-height: 100svh;
     background-color: var(--color-cream);
     color: var(--color-body);
     font-family: var(--font-sans);
@@ -82,7 +82,7 @@
 /* ── Layout ── */
 .invitation {
   position: relative;
-  min-height: 100dvh;
+  min-height: 100svh;
   overflow-x: hidden;
   background:
     radial-gradient(circle at 20% 12%, rgb(128 101 47 / 0.035) 0 1px, transparent 1.5px) 0 0 / 13px 13px,
@@ -95,8 +95,7 @@
   z-index: 1;
   max-width: 460px;
   margin: 0 auto;
-  padding: max(clamp(96px, 22vw, 120px), calc(env(safe-area-inset-top, 0px) + 72px))
-    clamp(22px, 6vw, 36px)
+  padding: clamp(72px, 16vw, 108px) clamp(22px, 6vw, 36px)
     clamp(112px, 24vw, 152px);
 }
 
@@ -984,7 +983,31 @@ html.hero-ready .hero-animate {
 
 @media (max-width: 768px) {
   .invitation-content {
-    padding-top: max(clamp(104px, 26vw, 128px), calc(env(safe-area-inset-top, 0px) + 88px));
+    padding-top: calc(env(safe-area-inset-top, 0px) + 3.25rem);
+  }
+
+  .hero-animate {
+    opacity: 1;
+    transform: none;
+  }
+
+  html.hero-ready .hero-animate {
+    animation: heroFadeIn 0.75s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    animation-delay: calc(var(--i, 0) * 0.1s);
+  }
+
+  html:not(.hero-ready) .hero-animate {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes heroFadeIn {
+  from {
+    opacity: 0.35;
+  }
+  to {
+    opacity: 1;
   }
 }
 

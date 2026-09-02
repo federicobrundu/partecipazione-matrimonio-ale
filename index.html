@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, interactive-widget=resizes-content" />
     <meta name="theme-color" content="#f6f1e7" />
     <meta
       name="description"
@@ -47,7 +47,14 @@
     <title>Alessandra &amp; Andrea — 25 Giugno 2027</title>
     <script>
       if ('scrollRestoration' in history) history.scrollRestoration = 'manual'
-      window.scrollTo(0, 0)
+      function __goTop() {
+        window.scrollTo(0, 0)
+        document.documentElement.scrollTop = 0
+        document.body.scrollTop = 0
+      }
+      __goTop()
+      window.addEventListener('load', __goTop)
+      window.addEventListener('pageshow', __goTop)
     </script>
   </head>
   <body>
