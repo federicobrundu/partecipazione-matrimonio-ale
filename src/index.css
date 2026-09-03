@@ -130,23 +130,25 @@
   z-index: 0;
   pointer-events: none;
   user-select: none;
-  opacity: 0.78;
+  opacity: 0.92;
+  mix-blend-mode: multiply;
 }
 
 .floral-top-right {
-  top: -8px;
-  right: -24px;
-  width: clamp(180px, 48vw, 240px);
+  top: 0;
+  right: -18px;
+  width: clamp(200px, 52vw, 280px);
   height: auto;
-  transform-origin: top right;
 }
 
 .floral-bottom-left {
-  bottom: -12px;
-  left: -28px;
-  width: clamp(160px, 44vw, 220px);
+  top: 100vh;
+  top: 94dvh;
+  left: calc(-1 * clamp(200px, 52vw, 280px));
+  width: clamp(200px, 52vw, 280px);
   height: auto;
-  transform-origin: bottom left;
+  transform: rotate(180deg);
+  transform-origin: 100% 0%;
 }
 
 /* ── Hero entrance ── */
@@ -953,14 +955,6 @@ html.hero-ready .hero-animate {
   .invitation-content {
     padding-top: 96px;
     padding-bottom: 136px;
-  }
-
-  .floral-top-right {
-    right: max(0px, calc(50% - 430px / 2 - 60px));
-  }
-
-  .floral-bottom-left {
-    left: max(0px, calc(50% - 430px / 2 - 60px));
   }
 
   .section-divider-wrap {
