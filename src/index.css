@@ -913,10 +913,11 @@ html.hero-ready .hero-animate {
   font-weight: 600;
   letter-spacing: 0.08em;
   line-height: 1.5;
-  color: var(--color-black);
-  background: #fff;
-  border: 1px solid color-mix(in srgb, var(--color-gold-dark) 25%, transparent);
+  color: var(--color-gold-dark);
+  background: color-mix(in srgb, var(--color-sage-light) 38%, var(--color-cream));
+  border: 1px solid color-mix(in srgb, var(--color-sage) 28%, transparent);
   border-radius: var(--radius-sm);
+  box-shadow: 0 4px 14px color-mix(in srgb, var(--color-sage) 5%, transparent);
   word-break: break-all;
 }
 
