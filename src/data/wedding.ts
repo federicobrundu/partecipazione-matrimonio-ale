@@ -15,8 +15,8 @@ export const weddingConfig = {
     title: 'Programma della giornata',
     items: [
       { time: '17.00', label: 'Cerimonia', detail: 'Santuario Maria SS. di Loreto' },
-      { time: '18.30', label: 'Aperitivo di benvenuto', detail: 'Greenpark Events' },
-      { time: '20.00', label: 'Cena e festa', detail: 'Greenpark Events' },
+      { time: '19.00', label: 'Aperitivo di benvenuto', detail: 'Greenpark Events' },
+      { time: '20.30', label: 'Cena e festa', detail: 'Greenpark Events' },
     ],
   },
 
@@ -35,7 +35,7 @@ export const weddingConfig = {
     title: 'Ricevimento',
     venue: 'Greenpark Events',
     address: 'Strada Statale 628, 03037 Pontecorvo',
-    time: 'Aperitivo dalle ore 18.30',
+    time: 'Aperitivo dalle ore 19.00 · Cena dalle ore 20.30',
     mapsUrl:
       'https://www.google.com/maps/search/?api=1&query=Greenpark+Events,+Strada+Statale+628,+03037+Pontecorvo+FR',
     image: locationImg,
@@ -43,10 +43,6 @@ export const weddingConfig = {
   },
 
   practicalInfo: {
-    dressCode: {
-      title: 'Dress code',
-      text: 'Elegante — toni naturali e colori pastello benvenuti.',
-    },
     parking: {
       title: 'Parcheggio',
       text: 'Parcheggio gratuito disponibile presso la location del ricevimento.',
@@ -61,20 +57,6 @@ export const weddingConfig = {
     // Opzionale: endpoint Formspree (es. https://formspree.io/f/xxxxx)
     formEndpoint: '',
     whatsappRsvp: '+393465149993',
-    contacts: [
-      {
-        name: 'Andrea',
-        phone: '389 425 4661',
-        tel: '+393894254661',
-        whatsapp: '393894254661',
-      },
-      {
-        name: 'Alessandra',
-        phone: '346 514 9993',
-        tel: '+393465149993',
-        whatsapp: '393465149993',
-      },
-    ],
     giftMessage:
       'Il regalo più grande per noi sarà condividere con voi questo giorno speciale. Per chi volesse, può contribuire al nostro progetto di vita insieme.',
     accountHolder: 'BRUNDU ALESSANDRA MOLLICONE ANDREA ANTONIO',

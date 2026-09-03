@@ -1,7 +1,7 @@
 import { useCallback, useState, type CSSProperties } from 'react'
 import { weddingConfig } from '../data/wedding'
 import { FloralDecoration } from './FloralDecoration'
-import { GoldHeart, MapPinIcon, WhatsAppIcon } from './Icons'
+import { GoldHeart, MapPinIcon } from './Icons'
 import { RevealOnScroll, SectionDivider } from './RevealOnScroll'
 import { RSVPForm } from './RSVPForm'
 import { Countdown } from './Countdown'
@@ -65,43 +65,6 @@ function CopyIbanBlock({ iban }: { iban: string }) {
             ? 'Copia non riuscita. Seleziona manualmente il codice IBAN.'
             : ''}
       </span>
-    </div>
-  )
-}
-
-function ContactRow({
-  name,
-  phone,
-  tel,
-  whatsapp,
-}: {
-  name: string
-  phone: string
-  tel: string
-  whatsapp: string
-}) {
-  return (
-    <div className="contact-row">
-      <strong className="contact-name">{name}</strong>
-      <div className="contact-actions">
-        <a
-          href={`tel:${tel}`}
-          className="contact-action contact-action-phone"
-          aria-label={`Chiama ${name} al numero ${phone}`}
-        >
-          {phone}
-        </a>
-        <a
-          href={`https://wa.me/${whatsapp}`}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="contact-action contact-action-whatsapp"
-          aria-label={`Scrivi a ${name} su WhatsApp`}
-        >
-          <WhatsAppIcon />
-          WhatsApp
-        </a>
-      </div>
     </div>
   )
 }
@@ -240,10 +203,6 @@ export function InvitationPage() {
           </RevealOnScroll>
           <div className="info-cards">
             <RevealOnScroll as="article" className="info-card" delay={60}>
-              <h3 className="info-card-title">{practicalInfo.dressCode.title}</h3>
-              <p className="info-card-text">{practicalInfo.dressCode.text}</p>
-            </RevealOnScroll>
-            <RevealOnScroll as="article" className="info-card" delay={120}>
               <h3 className="info-card-title">{practicalInfo.parking.title}</h3>
               <p className="info-card-text">{practicalInfo.parking.text}</p>
             </RevealOnScroll>
@@ -265,18 +224,6 @@ export function InvitationPage() {
           <RevealOnScroll delay={100}>
             <RSVPForm />
           </RevealOnScroll>
-
-          <RevealOnScroll delay={120}>
-            <p className="details-or">oppure contattateci direttamente</p>
-          </RevealOnScroll>
-
-          <div className="contacts">
-            {details.contacts.map((contact, index) => (
-              <RevealOnScroll key={contact.name} delay={index * 80}>
-                <ContactRow {...contact} />
-              </RevealOnScroll>
-            ))}
-          </div>
 
           <RevealOnScroll delay={80}>
             <p className="gift-message">
